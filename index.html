@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+    <script type="module" src="./assets/scripts/app.js" defer></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="yourname"></div>
+    <div id="opponentname"></div>
+    <div id="gamestatus"></div>
+    <div id="gamebuttons"></div>
+    <input id='name' type="text" />
+    <button type="button" id="start">Click Me</button>
+    <button type="button" id="quit">Quit</button>
+    <table>
+        <tr>
+            <th>Round</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Ties</th>
+        </tr>
+        <tr>
+            <td id="round"></td>
+            <td id="wins"></td>
+            <td id="losses"></td>
+            <td id="ties"></td>
+        </tr>
+    </table>
+    <div id="roundinfo"></div>
+</body>
+
+</html>
