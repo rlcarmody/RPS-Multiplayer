@@ -109,6 +109,7 @@ const reset = _ => {
     opponent.id = '';
     opponent.name = '';
     $('#opponentname').empty();
+    $('#gamebuttons').empty();
 }
 
 const queue = _ => {
