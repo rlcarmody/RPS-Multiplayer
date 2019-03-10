@@ -34,7 +34,7 @@ $('#control').on('click', '#start', function () {
 const startGame = _ => {
     db.ref('/Rooms').limitToFirst(2).on('value', snap => {
         if (opponent.name != '') {
-        $('#roundinfo').text(`${opponent.name} quit. Please wait to be connected to another player`);
+            $('#roundinfo').text(`${opponent.name} quit. Please wait to be connected to another player`);
             reset();
         }
         if (snap.numChildren() < 2) {
@@ -66,15 +66,15 @@ const evaluate = snap => {
     const messagePlayer = id => {
         player.id === id ? $('#roundinfo').text('Waiting on opponent. ') : $('#roundinfo').text('Your opponent is waiting for you');
     }
-     const compare = (playerChoice, opponentChoice) => {
+    const compare = (playerChoice, opponentChoice) => {
         $('#roundinfo').html('<p>You chose: ' + playerChoice + '</p><p>Your opponent chose: ' + opponentChoice + '</p>');
         if (playerChoice === opponentChoice) {
             $('#roundinfo').prepend('You tied');
             player.ties++
             $('#ties').text(player.ties);
-        } else if ((playerChoice === 'rock' && opponentChoice === 'scissors') || 
-                (playerChoice === 'scissors' && opponentChoice === 'paper') || 
-                (playerChoice === 'paper' && opponentChoice === 'rock')) {
+        } else if ((playerChoice === 'rock' && opponentChoice === 'scissors') ||
+            (playerChoice === 'scissors' && opponentChoice === 'paper') ||
+            (playerChoice === 'paper' && opponentChoice === 'rock')) {
             player.wins++;
             $('#roundinfo').prepend('You win!');
             $('#wins').text(player.wins);
@@ -84,12 +84,12 @@ const evaluate = snap => {
             $('#losses').text(player.losses);
         }
         roundStart();
-     }
-   
+    }
+
     try {
         let json = snap.toJSON();
         let arrOfKeys = Object.keys(json[round])
-        arrOfKeys.length === 2 ? compare(json[round][player.id],json[round][opponent.id]) : messagePlayer(arrOfKeys[0]);
+        arrOfKeys.length === 2 ? compare(json[round][player.id], json[round][opponent.id]) : messagePlayer(arrOfKeys[0]);
     } catch {
         console.warn("It's okay, there's just no data at this location yet"); //The listener event fires the function once before any values are added and results in a TypeError
     }
@@ -133,7 +133,7 @@ $('#control').on('click', '#quit', function () {
     $('#control').html(`<button type="button" id="start">Start Game</button>`);
     db.ref('/Rooms').off();
     db.ref('/Game/Rounds').off();
-    
+
     //db.ref('/Chat').off();
     player.connection.remove();
     player.id = '';
