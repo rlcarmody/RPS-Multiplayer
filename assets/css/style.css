@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');
+
+body {
+    background-color: #34885A;
+    color: white;
+    font-family: 'Chelsea Market', cursive;
+    font-size: 20px;
+    padding: 0;
+    margin: 0 auto;
+}
+.wrapper {
+    margin: 1rem auto;
+    text-align: center;
+    box-shadow: 5px 5px 15px -3px rgba(0,0,0,0.7);
+}
+svg {
+    fill: white;
+    width: 3rem;
+    height: 3rem;
+}
+svg:hover {
+    cursor: pointer;
+    transform: scale(1.25);
+    transition-duration: 100ms;
+}
+
+div {
+    background-color: #22264D;
+    margin: 0 auto;
+    padding: 2rem 0;
+    width: 60%;
+}
+table {
+    margin: 0 auto;
+}
+#gamebuttons {
+    display: flex;
+    justify-content: space-around;
+}
+#username {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#form {
+    background-color: #E4B731;
+    width: 50%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+form {
+    width: 100%;
+}
+input {
+    border: none;
+    width: 60%;
+    padding: 10px;
+    font-family: 'Chelsea Market';
+    font-size: 1.25em;
+}
+button {
+    font-family: 'Chelsea Market';
+    padding: 10px 15px;
+    font-size: 1.25em;
+    border: none;
+    background-color: #34885A;
+    color: white;
+}
+button:hover {
+    cursor: pointer;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+span {
+    margin: 10px;
+}
+th {
+    padding: 10px;
+}
+
+@media only screen and (max-width: 640px) {
+    div {
+        width: 98%;
+    }
+    #form {
+        width: 98%;
+    }
+    input {
+        font-size: 1em;
+        padding: 5px;
+    }
+}

@@ -15,8 +15,8 @@ const opponent = {
 let round = 0;
 let dbRoundPush;
 
-$('#start').on('click', function () {
-    player.name = $('#name').val();
+$('#control').on('click', '#start', function () {
+    $('#control').html(`<button type="button" id="quit">Quit</button>`)
     player.connection = db.ref('/Rooms').push(player);
     player.connection.onDisconnect().remove();
     player.id = player.connection.key;
@@ -34,7 +34,7 @@ $('#start').on('click', function () {
 const startGame = _ => {
     db.ref('/Rooms').limitToFirst(2).on('value', snap => {
         if (opponent.name != '') {
-            alert(`${opponent.name} quit. Please wait to be connected to another player`);
+        $('#roundinfo').text(`${opponent.name} quit. Please wait to be connected to another player`);
             reset();
         }
         if (snap.numChildren() < 2) {
@@ -44,16 +44,17 @@ const startGame = _ => {
             return queue();
         }
         reset();
+        $('#roundinfo').empty();
         let currentPlayers = Object.keys(snap.val());
         currentPlayers.splice(currentPlayers.indexOf(player.id), 1);
         opponent.id = currentPlayers[0];
         opponent.name = snap.val()[opponent.id].name;
-        $('#gamestatus').text(`You are facing off against ${opponent.name}`);
+        $('#opponentname').text(`Opponent: ${opponent.name}`);
         db.ref('/Game/Rounds').limitToLast(1).on('value', evaluate);
         roundStart();
     })
 }
-$('#gamebuttons').on('click', 'button', function () {
+$('#gamebuttons').on('click', 'svg', function () {
     $('#gamebuttons').empty();
     let choice = $(this).attr('data-value');
     dbRoundPush = db.ref('/Game/Rounds/' + round + '/' + player.id)
@@ -68,19 +69,19 @@ const evaluate = snap => {
      const compare = (playerChoice, opponentChoice) => {
         $('#roundinfo').html('<p>You chose: ' + playerChoice + '</p><p>Your opponent chose: ' + opponentChoice + '</p>');
         if (playerChoice === opponentChoice) {
-            $('#roundinfo').append('You tied');
+            $('#roundinfo').prepend('You tied');
             player.ties++
             $('#ties').text(player.ties);
-        } else if ((playerChoice === 'rock' && opponentChoice === 'scisccors') || 
+        } else if ((playerChoice === 'rock' && opponentChoice === 'scissors') || 
                 (playerChoice === 'scissors' && opponentChoice === 'paper') || 
                 (playerChoice === 'paper' && opponentChoice === 'rock')) {
             player.wins++;
-            $('#roundinfo').append('You win!');
+            $('#roundinfo').prepend('You win!');
             $('#wins').text(player.wins);
         } else {
             player.losses++;
-            $('#roundinfo').append('You lose!');
-            $('#wins').text(player.losses);
+            $('#roundinfo').prepend('You lose!');
+            $('#losses').text(player.losses);
         }
         roundStart();
      }
@@ -96,7 +97,10 @@ const evaluate = snap => {
 const roundStart = _ => {
     round++;
     $('#round').text(round);
-    $('#gamebuttons').html('<button data-value="rock" type="button">Rock</button><button data-value="paper" type="button">Paper</button><button data-value="scissors" type="button">Scissors</button>')
+    $('#gamebuttons').html(`<img src="./assets/images/rock.svg" data-value="rock" />
+                            <img src="./assets/images/paper.svg" data-value="paper" />
+                            <img src="./assets/images/scissors.svg" data-value="scissors" />`)
+    $('img').svgInject();
     $('#roundinfo').append('Round number ' + round + ' has begun.  Make your choice')
 }
 const reset = _ => {
@@ -104,6 +108,7 @@ const reset = _ => {
     round = 0;
     opponent.id = '';
     opponent.name = '';
+    $('#opponentname').empty();
 }
 
 const queue = _ => {
@@ -112,18 +117,19 @@ const queue = _ => {
         snap.forEach(e => { currentPlayers.push(e.key) });
         let position = currentPlayers.indexOf(player.id) - 1;
         if (position < 0 && currentPlayers.length < 2) {
-            $('#gamestatus').text('You are the only player so far. Please wait for an opponent.')
+            $('#opponentname').text('You are the only player so far. Please wait for an opponent.')
         } else if (position > 0) {
-            $('#gamestatus').text(`You are number ${position} in the queue.`)
+            $('#opponentname').text(`You are number ${position} in the queue.`)
         } else {
             db.ref('/Rooms').off();
             startGame();
         }
     })
 }
-$('#quit').on('click', function () {
+$('#control').on('click', '#quit', function () {
     $('#gamebuttons').empty();
-    $('#gamestatus').text('You quit')
+    $('#roundinfo').text('You quit');
+    $('#control').html(`<button type="button" id="start">Start Game</button>`);
     db.ref('/Rooms').off();
     db.ref('/Game/Rounds').off();
     
@@ -133,3 +139,11 @@ $('#quit').on('click', function () {
     player.connection = '';
     reset();
 });
+
+$('form').on('submit', function (e) {
+    e.preventDefault();
+    player.name = $('input').val();
+    $('#yourname').text(player.name);
+    $('form')[0].reset()
+    $('#username').remove();
+})

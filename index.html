@@ -8,32 +8,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
     <script type="module" src="./assets/scripts/app.js" defer></script>
-    <title>Document</title>
+    <script src="./assets/scripts/svgInject.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Rock-Paper-Scissors</title>
 </head>
 
 <body>
-    <div id="yourname"></div>
-    <div id="opponentname"></div>
-    <div id="gamestatus"></div>
-    <div id="gamebuttons"></div>
-    <input id='name' type="text" />
-    <button type="button" id="start">Click Me</button>
-    <button type="button" id="quit">Quit</button>
-    <table>
-        <tr>
-            <th>Round</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>Ties</th>
-        </tr>
-        <tr>
-            <td id="round"></td>
-            <td id="wins"></td>
-            <td id="losses"></td>
-            <td id="ties"></td>
-        </tr>
-    </table>
-    <div id="roundinfo"></div>
+    <div class="wrapper">
+        <div class="header">
+            <span id="yourname"></span>
+            <span id="opponentname"></span>
+        </div>
+        <div id="control">
+                <button type="button" id="start">Start Game</button>
+            </div>
+        <div id="gamebuttons"></div>
+        <div id="username">
+            <div id=form>
+                <form>
+                    <input id='name' type="text" placeholder="Enter a User Name" />
+                    <button type="submit">Go</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="stats">
+            <table>
+                <tr>
+                    <th>Round</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Ties</th>
+                </tr>
+                <tr>
+                    <td id="round"></td>
+                    <td id="wins"></td>
+                    <td id="losses"></td>
+                    <td id="ties"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="roundinfo"></div>
+    </div>
 </body>
 
 </html>
